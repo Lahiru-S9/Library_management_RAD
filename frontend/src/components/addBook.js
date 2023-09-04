@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function AddBook() {
   // Define state variables to store form input values
@@ -22,7 +23,11 @@ function AddBook() {
       genre,
     };
 
-    console.log(newBook);
+    axios.post('http://localhost:8090/book/add', newBook).then(() => {
+      alert('Book added')
+    }).catch((err) => {
+      alert(err)
+    })
 
     // Send the new book data to your backend for saving
     // You can use a fetch or Axios to make a POST request to your backend API
