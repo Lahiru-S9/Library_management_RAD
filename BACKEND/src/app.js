@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from "express";
-import mogoose from "mongoose";
+import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import passport from "passport";
@@ -10,7 +10,7 @@ import config from "./configs";
 import MongoStore from 'connect-mongo';
 import { connect } from "./utils/database.connection";
 import { googleAuth } from "./configs/google.auth";
-import { routesInit } from "./api/routes";
+import { routesInit } from "./api/routes/index";
 import bookRoutes from "./api/routes/books";
 
 
@@ -37,10 +37,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.get("/", (req, res ,next) => {
-    res.send("<a href='http://localhost:8090/auth/google'>Login with Google</a>");
-    next();
-});
+// app.get("/", (req, res ,next) => {
+//     res.send("<a href='http://localhost:8090/auth/google'>Login with Google</a>");
+//     next();
+// });
 
 app.use("/book", bookRoutes);
 

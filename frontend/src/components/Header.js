@@ -6,7 +6,7 @@ function Header(){
     return(
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
-    <a className="navbar-brand" href="#"style={{color:"red"}}>Navbar</a>
+    <a className="navbar-brand" href="/"style={{color:"red"}}>Home</a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -16,7 +16,7 @@ function Header(){
           <Link to="/" className="nav-link active" aria-current="page" >Home</Link>
         </li>
         <li className="nav-item">
-          <Link to="/add" className="nav-link" >Add Books</Link>
+          <Link to="/books" className="nav-link" >Books</Link>
         </li>
         <li className="nav-item dropdown">
           <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
