@@ -1,10 +1,10 @@
 import express from 'express';
 const router = express.Router();
-import { authenticate } from '../middleware/auth.middleware.js';
+//import { authenticate } from '../middleware/auth.middleware.js';
 
 import Book from '../model/book.js';
 
-router.route('/add').post(authenticate ,(req,res)=>{
+router.route('/add').post((req,res)=>{
     const title = req.body.title;
     const author = req.body.author;
     const publicationYear = Number(req.body.publicationYear);
