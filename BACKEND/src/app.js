@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from "express";
+import authRoutes from "./api/routes/auth-routes";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -12,7 +13,7 @@ import { connect } from "./utils/database.connection";
 import { googleAuth } from "./configs/google.auth";
 import { routesInit } from "./api/routes/index";
 import bookRoutes from "./api/routes/books";
-
+import { authenticate } from "./api/middleware/auth.middleware";
 
 const app = express();
 const PORT = process.env.PORT || "8090";
@@ -28,20 +29,18 @@ app.use(
         store: MongoStore.create({ mongoUrl: config.DB_CONNECTION_STRING }),    
         cookie: {
             secure: false,
-            expires: new Date(Date.now() + 10000),
-            maxAge: 10000,
+            maxAge: 24*60*60*1000,
         }
     })
 )
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// app.get("/", (req, res ,next) => {
-//     res.send("<a href='http://localhost:8090/auth/google'>Login with Google</a>");
-//     next();
-// });
-
+app.get("/", (req, res ,next) => {
+    res.send("<a href='http://localhost:8090/auth/google'>Login with Google</a>");
+    next();
+});
+app.use("/auth", authRoutes);
 app.use("/book", bookRoutes);
 
 app.listen(PORT, () =>{
