@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; 
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useBooksContext } from "../hooks/useBooksContext";
 
 export default function AllBooks() {
+  const { books, dispatch } = useBooksContext();
   const { user } = useAuthContext();
-  const [books, setBooks] = useState([]);
+  //const [books, setBooks] = useState([]);
 
   useEffect(() => {
     function getBooks() {
@@ -22,7 +24,7 @@ export default function AllBooks() {
       fetch("http://localhost:8090/book/", requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          setBooks(data);
+          dispatch({type: 'SET_BOOKS', payload: data});
         })
         .catch((err) => {
           alert(err.message);
@@ -31,7 +33,7 @@ export default function AllBooks() {
     if (user) {
       getBooks();
     }
-  }, [user]);
+  }, [dispatch, user]);
 
   const handleDelete = (bookId) => {
     if (!user) {
@@ -49,8 +51,7 @@ export default function AllBooks() {
       .then((response) => {
         if (response.status === 200) {
           // Book deleted successfully
-          alert('Book deleted');
-          // You may also update your state or perform any necessary actions
+          dispatch({type: 'DELETE_BOOK', payload: bookId});
         } else {
           alert('Failed to delete book');
         }

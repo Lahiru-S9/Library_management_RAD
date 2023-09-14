@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { useBooksContext } from '../hooks/useBooksContext';
 
 function AddBook() {
+  const { dispatch } = useBooksContext();
   const { user } = useAuthContext();
   // Define state variables to store form input values
   const [title, setTitle] = useState('');
@@ -49,6 +51,7 @@ function AddBook() {
         setPublicationYear('');
         setISBN('');
         setGenre('');
+        dispatch({type: 'CREATE_BOOK', payload: newBook});
       } else {
         const data = await response.json();
         setError(data.error || 'Failed to add book');
