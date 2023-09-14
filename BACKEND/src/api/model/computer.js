@@ -1,6 +1,6 @@
-import mangoose from 'mangoose'
+import mongoose from 'mongoose'
 
-const ComputerSchema = new mangoose.Schema({
+const ComputerSchema = new mongoose.Schema({
 
   IDC:{
     type: String,
@@ -20,10 +20,15 @@ const ComputerSchema = new mangoose.Schema({
 
   manufacturedYear:{
     type: Date
+  },
+  
+  user_id: {
+    type: String,
+    required: true,
   }
 
 });
 
-const Computer = mangoose.model('computers', ComputerSchema);
+const Computer = mongoose.model('computers', ComputerSchema);
 
 export default Computer;

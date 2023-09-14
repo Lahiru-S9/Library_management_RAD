@@ -1,5 +1,10 @@
 import express from 'express';
+import requireAuth from '../middleware/requireAuth.js';
 const router = express.Router();
+
+
+
+router.use(requireAuth);
 
 import Computer from '../model/computer.js';
 
@@ -8,12 +13,15 @@ router.route('/add').post((req,res)=>{
   const brand = req.body.brand;
   const status = req.body.status;
   const manufacturedYear = req.body.manufacturedYear;
+  const user_id = req.user._id;
+
 
   const newComputer = new Computer({
     IDC,
     brand,
     status,
     manufacturedYear,
+    user_id,
   });
 
   newComputer.save().then(()=>{
@@ -24,7 +32,9 @@ router.route('/add').post((req,res)=>{
 })
 
 router.route("/").get((req,res)=>{
-  Computer.find().then((computers)=>{
+  const user_id = req.user._id
+
+  Computer.find({user_id}).then((computers)=>{
     res.json(computers);
   }).catch((err)=>{
     console.log(err);
@@ -63,4 +73,16 @@ router.route("/delete/:id").delete(async (req,res)=>{
   })
 })
 
-module.export = router;
+router.route("/get/:id").get(async (req,res)=>{
+  let userId = req.params.id;
+
+  const computer = await Computer.findById(userId).then((computer)=>{
+      res.status(200).send({status: "Book fetched", computer});
+  }).catch((err)=>{
+      console.log(err.message);
+      res.status(500).send({status: "Error with get computer", error: err.message});
+  })
+})
+
+
+module.exports = router;
