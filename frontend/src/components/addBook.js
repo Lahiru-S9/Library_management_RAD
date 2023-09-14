@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 function AddBook() {
+  const { user } = useAuthContext();
   // Define state variables to store form input values
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publicationYear, setPublicationYear] = useState('');
   const [ISBN, setISBN] = useState('');
   const [genre, setGenre] = useState('');
-
+  const [error, setError] = useState(null);
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      setError('You must be logged in');
+      return;
+    }
 
     // Create a book object with the form data
     const newBook = {
@@ -23,21 +29,34 @@ function AddBook() {
       genre,
     };
 
-    axios.post('http://localhost:8090/book/add', newBook).then(() => {
-      alert('Book added')
-    }).catch((err) => {
-      alert(err)
-    })
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.token}`,
+      },
+      body: JSON.stringify(newBook),
+    };
 
-    // Send the new book data to your backend for saving
-    // You can use a fetch or Axios to make a POST request to your backend API
+    try {
+      const response = await fetch('http://localhost:8090/book/add', requestOptions);
 
-    // Reset the form fields
-    setTitle('');
-    setAuthor('');
-    setPublicationYear('');
-    setISBN('');
-    setGenre('');
+      if (response.status === 200) {
+        alert('Book added');
+        // Reset the form fields
+        setTitle('');
+        setAuthor('');
+        setPublicationYear('');
+        setISBN('');
+        setGenre('');
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to add book');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Error adding book');
+    }
   };
 
   return (

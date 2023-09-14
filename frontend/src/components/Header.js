@@ -1,23 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
+
+
+
 
 function Header() {
-  // Function to handle logout (you can replace this with your actual logout logic)
-  const handleLogout = () => {
-    // Make an API request to your backend logout route
-    axios
-      .get("http://localhost:8090/auth/logout")
-      .then((response) => {
-        // Handle successful logout response (e.g., clear tokens, user data, etc.)
-        console.log("Logged out successfully");
-        // You can also redirect the user to the login page or perform other actions here
-      })
-      .catch((error) => {
-        // Handle logout error
-        console.error("Error during logout:", error);
-      });
-  };
+  const { logout } = useLogout();
+  const { user } = useAuthContext();
+ 
+  const handleClick = () => {
+    logout()
+  }
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -38,11 +33,20 @@ function Header() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link to="/login" className="nav-link active" aria-current="page">
-                Log In
-              </Link>
-            </li>
+            {!user && (
+              <div>
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link active" aria-current="page">
+                    Log In
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/signup" className="nav-link">
+                    Sign Up
+                  </Link>
+                </li>
+              </div>
+            )}
             <li className="nav-item">
               <Link to="/books" className="nav-link">
                 Books
@@ -80,11 +84,15 @@ function Header() {
               </ul>
             </li>
           </ul>
-
-          {/* Logout button */}
-      <button className="btn btn-outline-danger" onClick={handleLogout}>
-        Logout
-      </button>
+            {user && (
+              <div>
+                {/* Logout button */}
+                <span> {user.email} </span>
+                <button className="btn btn-outline-danger" onClick={handleClick}>
+                  Logout
+              </button>
+              </div>
+            )}
         </div>
       </div>
     </nav>

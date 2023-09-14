@@ -22,6 +22,10 @@ const BookSchema = new mongoose.Schema({
     genre: {
         type: String,
     },
+    user_id: {
+        type: String,
+        required: true,
+    }
     // You can add more fields as needed
 });
 

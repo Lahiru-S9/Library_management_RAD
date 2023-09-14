@@ -1,23 +1,65 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom"; // Assuming you're using React Router
+import { Link } from "react-router-dom"; 
+import { useAuthContext } from "../hooks/useAuthContext";
 
 export default function AllBooks() {
+  const { user } = useAuthContext();
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
     function getBooks() {
-      axios
-        .get("http://localhost:8090/book/")
-        .then((res) => {
-          setBooks(res.data);
+      if (!user) {
+        return;
+      }
+
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      };
+
+      fetch("http://localhost:8090/book/", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          setBooks(data);
         })
         .catch((err) => {
           alert(err.message);
         });
     }
-    getBooks();
-  }, []);
+    if (user) {
+      getBooks();
+    }
+  }, [user]);
+
+  const handleDelete = (bookId) => {
+    if (!user) {
+      return;
+    }
+
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${user.token}`
+      }
+    };
+
+    fetch(`http://localhost:8090/book/delete/${bookId}`, requestOptions)
+      .then((response) => {
+        if (response.status === 200) {
+          // Book deleted successfully
+          alert('Book deleted');
+          // You may also update your state or perform any necessary actions
+        } else {
+          alert('Failed to delete book');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        alert('Error deleting book');
+      });
+  };
 
   return (
     <div className="container">
@@ -51,12 +93,12 @@ export default function AllBooks() {
                 >
                   Update
                 </Link>
-                {/* <button
+                 <button
                   className="btn btn-danger"
-                  onClick={() => handleDeleteBook(book._id)}
+                  onClick={() => handleDelete(book._id)}
                 >
                   Delete
-                </button> */}
+                </button> 
               </td>
             </tr>
           ))}

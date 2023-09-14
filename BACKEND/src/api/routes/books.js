@@ -1,6 +1,9 @@
 import express from 'express';
+import requireAuth from '../middleware/requireAuth.js';
 const router = express.Router();
-//import { authenticate } from '../middleware/auth.middleware.js';
+
+//require auth for all workout routes
+router.use(requireAuth);
 
 import Book from '../model/book.js';
 
@@ -10,6 +13,7 @@ router.route('/add').post((req,res)=>{
     const publicationYear = Number(req.body.publicationYear);
     const ISBN = req.body.ISBN;
     const genre = req.body.genre;
+    const user_id = req.user._id;
 
     const newBook = new Book({
         title,
@@ -17,6 +21,7 @@ router.route('/add').post((req,res)=>{
         publicationYear,
         ISBN,
         genre,
+        user_id,
     });
 
     newBook.save().then(()=>{
@@ -27,7 +32,9 @@ router.route('/add').post((req,res)=>{
 })
 
 router.route("/").get((req,res)=>{
-    Book.find().then((books)=>{
+    const user_id = req.user._id
+
+    Book.find( {user_id} ).then((books)=>{
         res.json(books);
     }).catch((err)=>{
         console.log(err);
