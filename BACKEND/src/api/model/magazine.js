@@ -25,6 +25,10 @@ const MagazineSchema = new mongoose.Schema({
     type: String,
     unique: true, // Ensures uniqueness of ISBN
     required: true,
+  },
+  user_id: {
+    type: String,
+    required: true,
   }
 
 });

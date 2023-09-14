@@ -1,6 +1,10 @@
 import express from 'express';
+import requireAuth from '../middleware/requireAuth.js';
 const router = express.Router();
 
+
+
+router.use(requireAuth);
 import Newspaper from '../model/newspaper.js';
 
 router.route('/add').post((req,res)=>{
@@ -9,6 +13,7 @@ router.route('/add').post((req,res)=>{
   const typeoftheNewspaper = req.body.typeoftheNewspaper;
   const publisher = req.body.publisher;
   const IDN = req.body.IDN;
+  const user_id = req.user._id;
 
   const newNewspaper = new Newspaper({
     title,
@@ -16,6 +21,7 @@ router.route('/add').post((req,res)=>{
     typeoftheNewspaper,
     publisher,
     IDN,
+    user_id,
   });
 
   newNewspaper.save().then(()=>{
@@ -26,7 +32,10 @@ router.route('/add').post((req,res)=>{
 });
 
 router.route("/").get((req,res)=>{
-  Newspaper.find().then((newspapers)=>{
+
+  const user_id = req.user._id
+
+  Newspaper.find({user_id}).then((newspapers)=>{
     res.json(newspapers);
   }).catch((err)=>{
     console.log(err);
@@ -66,4 +75,14 @@ router.route("/delete/:id").delete(async (req,res)=>{
   })
 })
 
-module.export = router;
+router.route("/get/:id").get(async (req,res)=>{
+  let userId = req.params.id;
+
+  const newspaper = await Newspaper.findById(userId).then((newspaper)=>{
+      res.status(200).send({status: "Book fetched", newspaper});
+  }).catch((err)=>{
+      console.log(err.message);
+      res.status(500).send({status: "Error with get newspaper", error: err.message});
+  })
+})
+module.exports = router;

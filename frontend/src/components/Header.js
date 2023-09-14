@@ -64,12 +64,12 @@ function Header() {
               </a>
               <ul className="dropdown-menu">
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a className="dropdown-item" href="/newspapers">
                     Newspapers
                   </a>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a className="dropdown-item" href="/magazines">
                     Magazines
                   </a>
                 </li>
@@ -77,7 +77,7 @@ function Header() {
                   <hr className="dropdown-divider"></hr>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
+                  <a className="dropdown-item" href="/computers">
                     Computers
                   </a>
                 </li>
