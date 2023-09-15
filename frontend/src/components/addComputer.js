@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useComputerContext } from '../hooks/useComputersContext';
+import { useComputersContext } from '../hooks/useComputersContext';
 
 function AddComputer() {
-  const { dispatch } = useComputerContext();
+  const { dispatch } = useComputersContext();
   const { user } = useAuthContext();
   // Define state variables to store form input values
   const [IDC, setIDC] = useState('');

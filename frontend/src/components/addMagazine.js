@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useMagazineContext } from '../hooks/useMagazinesContext';
+import { useMagazinesContext } from '../hooks/useMagazinesContext';
 
 function AddMagazine() {
-  const { dispatch } = useMagazineContext();
+  const { dispatch } = useMagazinesContext();
   const { user } = useAuthContext();
   // Define state variables to store form input values
   const [title, setTitle] = useState('');

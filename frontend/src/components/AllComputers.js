@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useComputerContext } from '../hooks/useComputersContext';
+import { useComputersContext } from '../hooks/useComputersContext';
 
 export default function AllComputers() {
-  const { computers, dispatch } = useComputerContext();
+  const { computers, dispatch } = useComputersContext();
   const { user } = useAuthContext();
 
   useEffect(() => {

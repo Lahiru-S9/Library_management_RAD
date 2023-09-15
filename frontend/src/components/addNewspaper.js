@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useNewspaperContext } from '../hooks/useNewspapersContext';
+import { useNewspapersContext } from '../hooks/useNewspapersContext';
 
 function AddNewspaper() {
-  const { dispatch } = useNewspaperContext();
+  const { dispatch } = useNewspapersContext();
   const { user } = useAuthContext();
   // Define state variables to store form input values
   const [title, setTitle] = useState('');
