@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useNewspaperContext } from '../hooks/useNewspapersContext';
+import { useNewspapersContext } from '../hooks/useNewspapersContext';
 
 export default function AllNewspapers() {
-  const { newspapers, dispatch } = useNewspaperContext();
+  const { newspapers, dispatch } = useNewspapersContext();
   const { user } = useAuthContext();
 
   useEffect(() => {

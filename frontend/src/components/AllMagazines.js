@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useMagazineContext } from '../hooks/useMagazinesContext';
+import { useMagazinesContext } from '../hooks/useMagazinesContext';
 
 export default function AllMagazines() {
-  const { magazines, dispatch } = useMagazineContext();
+  const { magazines, dispatch } = useMagazinesContext();
   const { user } = useAuthContext();
 
   useEffect(() => {

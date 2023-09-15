@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { MagazineContext } from '../context/MagazineContext';
 
-export const useMagazineContext = () => {
+export const useMagazinesContext = () => {
     const context = useContext(MagazineContext);
 
     if (!context) {
-      throw new Error('usemagazineContext must be used within a MagazineContextProvider');
+      throw new Error('useMagazineContext must be used within a MagazineContextProvider');
     }
   
     return context;

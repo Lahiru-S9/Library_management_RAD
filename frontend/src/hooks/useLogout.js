@@ -1,15 +1,15 @@
 import { useAuthContext } from "./useAuthContext"
 import { useBooksContext } from "./useBooksContext"
-import { useComputerContext } from "./useComputersContext"
-import { useMagazineContext } from "./useMagazinesContext"
-import { useNewspaperContext } from "./useNewspapersContext"
+import { useComputersContext } from "./useComputersContext"
+import { useMagazinesContext } from "./useMagazinesContext"
+import { useNewspapersContext } from "./useNewspapersContext"
  
 export const useLogout = () => {
     const { dispatch } = useAuthContext()
     const { dispatch: BookDispatch } = useBooksContext()
-    const { dispatch: ComputerDispatch } = useComputerContext()
-    const { dispatch: MagazineDispatch } = useMagazineContext()
-    const { dispatch: NewspaperDispatch } = useNewspaperContext()
+    const { dispatch: ComputerDispatch } = useComputersContext()
+    const { dispatch: MagazineDispatch } = useMagazinesContext()
+    const { dispatch: NewspaperDispatch } = useNewspapersContext()
 
     const logout = () => {
         //remove user from storage
