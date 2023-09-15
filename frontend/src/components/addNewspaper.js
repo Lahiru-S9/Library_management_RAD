@@ -24,16 +24,17 @@ function AddNewspaper() {
     // Create a newspaper object with the form data
     const newNewspaper = {
       title,
-      publishedDate,
+      issuedDate: publishedDate, // Corrected the field name to match the Express route
+      typeoftheNewspaper: 'Type of Newspaper', // Update with the correct field name or set it to a static value
       publisher,
-      numberOfPages,
+      IDN: numberOfPages, // Corrected the field name to match the Express route
     };
 
     const requestOptions = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`,
+        Authorization: `Bearer ${user.token}`,
       },
       body: JSON.stringify(newNewspaper),
     };

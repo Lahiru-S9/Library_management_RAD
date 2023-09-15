@@ -64,22 +64,23 @@ function Header() {
               </a>
               <ul className="dropdown-menu">
                 <li>
-                  <a className="dropdown-item" href="/newspapers">
-                    Newspapers
-                  </a>
+                <Link to="/newspapers" className="nav-link">
+                  Newspapers
+                </Link>
+                  
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/magazines">
-                    Magazines
-                  </a>
+                  <Link to="/magazines" className="nav-link">
+                  Magazines
+                </Link>
                 </li>
                 <li>
                   <hr className="dropdown-divider"></hr>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/computers">
-                    Computers
-                  </a>
+                <Link to="/computers" className="nav-link">
+                  Computers
+                </Link>
                 </li>
               </ul>
             </li>
